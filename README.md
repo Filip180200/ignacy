@@ -105,8 +105,9 @@ Przykładowe szare obrazki (`.svg`) możesz potem usunąć.
 
 ## 3. Jak zmienić adres e-mail
 
+Kontakt to okno, które otwiera się po kliknięciu „Kontakt” (w menu) albo „Umów konsultację”.
 Otwórz `index.html` i wyszukaj `kontakt@przyklad.pl` (na github.com w trybie edycji: Ctrl+F).
-Adres występuje **dwa razy w tej samej linijce**: po `mailto:` i jako widoczny tekst. Zmień oba.
+Zmień **wszystkie** wystąpienia, czyli dwa w linijce z `contact-mail` i jedno przy przycisku „Napisz e-mail”.
 
 **LinkedIn:** link do profilu to ikona w stopce, w `index.html`. Wyszukaj `linkedin.com` i zmień adres.
 

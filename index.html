@@ -20,26 +20,32 @@
 
     <a class="skip-link" href="#o-mnie">Przejdź do treści</a>
 
-    <header class="site-header">
-        <div class="scroll-progress" aria-hidden="true"></div>
-        <nav class="nav" aria-label="Nawigacja główna">
-            <a href="#start" class="nav-logo" aria-label="Ignacy Mikołajczak — początek strony">
-                <span aria-hidden="true">IM</span>
-            </a>
-            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
-                <span class="visually-hidden">Menu</span>
-                <span class="nav-toggle-line" aria-hidden="true"></span>
-                <span class="nav-toggle-line" aria-hidden="true"></span>
-            </button>
-            <ul class="nav-list" id="nav-list">
-                <li><a href="#o-mnie">O mnie</a></li>
-                <li><a href="#filozofia">Filozofia</a></li>
-                <li><a href="#problemy">W czym pomagam</a></li>
-                <li><a href="#wspolpraca">Współpraca</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Menu na telefonie / mniejszych ekranach: pływający przycisk w prawym górnym rogu -->
+    <nav class="mobile-nav" aria-label="Nawigacja">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
+            <span class="visually-hidden">Menu</span>
+            <span class="nav-toggle-line" aria-hidden="true"></span>
+            <span class="nav-toggle-line" aria-hidden="true"></span>
+        </button>
+        <ul class="nav-list" id="nav-list">
+            <li><a href="#o-mnie">01 · O mnie</a></li>
+            <li><a href="#filozofia">02 · Filozofia</a></li>
+            <li><a href="#problemy">03 · W czym pomagam</a></li>
+            <li><a href="#wspolpraca">04 · Współpraca</a></li>
+            <li><button type="button" data-contact-open>05 · Kontakt</button></li>
+        </ul>
+    </nav>
+
+    <!-- Pionowe menu przy prawej krawędzi (duże ekrany): kreska = rozdział -->
+    <nav class="side-nav" aria-label="Rozdziały strony">
+        <ul>
+            <li><a href="#o-mnie"><span class="side-label">O mnie</span><span class="side-num">01</span><span class="side-line" aria-hidden="true"></span></a></li>
+            <li><a href="#filozofia"><span class="side-label">Filozofia</span><span class="side-num">02</span><span class="side-line" aria-hidden="true"></span></a></li>
+            <li><a href="#problemy"><span class="side-label">W czym pomagam</span><span class="side-num">03</span><span class="side-line" aria-hidden="true"></span></a></li>
+            <li><a href="#wspolpraca"><span class="side-label">Współpraca</span><span class="side-num">04</span><span class="side-line" aria-hidden="true"></span></a></li>
+            <li class="side-contact"><button type="button" data-contact-open><span class="side-label">Kontakt</span><span class="side-num">05</span><span class="side-line" aria-hidden="true"></span></button></li>
+        </ul>
+    </nav>
 
     <main>
         <!-- ===== START ===== -->
@@ -57,7 +63,7 @@
                     </h1>
                     <p class="lead hero-anim" style="--d: 5">Piłka nożna jest ze mną od mundialu w 2006 roku i przez wiele lat sam grałem. Dziś jako psycholog sportu wspieram zawodników, drużyny, trenerów i rodziców, bo sport to coś więcej niż wynik.</p>
                     <div class="hero-actions hero-anim" style="--d: 6">
-                        <a class="btn btn-primary" href="#kontakt">Umów konsultację</a>
+                        <button class="btn btn-primary" type="button" data-contact-open>Umów konsultację</button>
                         <a class="btn" href="#o-mnie">Poznaj mnie</a>
                     </div>
                 </div>
@@ -67,8 +73,8 @@
         <!-- Przesuwający się pasek z hasłami (ozdobny, czytniki ekranu go pomijają) -->
         <div class="marquee" aria-hidden="true">
             <div class="marquee-track">
-                <span>Stres startowy</span><span>Koncentracja</span><span>Powrót po kontuzji</span><span>Motywacja</span><span>Wypalenie</span><span>Presja wyniku</span><span>Piłka nożna</span><span>Piłka ręczna</span>
-                <span>Stres startowy</span><span>Koncentracja</span><span>Powrót po kontuzji</span><span>Motywacja</span><span>Wypalenie</span><span>Presja wyniku</span><span>Piłka nożna</span><span>Piłka ręczna</span>
+                <span>Więcej niż gra</span><span>Więcej niż gra</span><span>Więcej niż gra</span><span>Więcej niż gra</span><span>Więcej niż gra</span><span>Więcej niż gra</span>
+                <span>Więcej niż gra</span><span>Więcej niż gra</span><span>Więcej niż gra</span><span>Więcej niż gra</span><span>Więcej niż gra</span><span>Więcej niż gra</span>
             </div>
         </div>
 
@@ -200,23 +206,37 @@
             </ol>
         </section>
 
-        <!-- ===== 5. KONTAKT ===== -->
-        <section class="section contact" id="kontakt" aria-labelledby="kontakt-title">
-            <div class="panel contact-panel reveal">
-                <p class="section-number" aria-hidden="true">05</p>
-                <h2 id="kontakt-title">Kontakt</h2>
-                <p>Napisz w kilku zdaniach, jaki sport uprawiasz i z czym chcesz pracować. Współpracuję z zawodnikami, drużynami i klubami.</p>
-                <!-- ADRES E-MAIL: zmień w dwóch miejscach w linijce poniżej (po "mailto:" i w tekście linku) -->
-                <a class="contact-mail" href="mailto:kontakt@przyklad.pl">kontakt@przyklad.pl</a>
-            </div>
-        </section>
     </main>
 
+    <!-- ===== KONTAKT: okno otwierane przyciskami „Kontakt” / „Umów konsultację” ===== -->
+    <dialog class="contact-dialog" id="kontakt" aria-labelledby="kontakt-title">
+        <div class="contact-dialog-inner">
+            <div class="hero-beam" aria-hidden="true"></div>
+            <button class="dialog-close" type="button" data-contact-close>
+                <span class="visually-hidden">Zamknij</span>
+                <span aria-hidden="true"></span>
+            </button>
+            <p class="eyebrow">Kontakt</p>
+            <h2 id="kontakt-title">Porozmawiajmy</h2>
+            <p>Napisz w kilku zdaniach, jaki sport uprawiasz i z czym chcesz pracować. Współpracuję z zawodnikami, drużynami i klubami.</p>
+            <!-- ADRES E-MAIL: zmień w dwóch miejscach w linijce poniżej (po "mailto:" i w tekście linku) -->
+            <a class="contact-mail" href="mailto:kontakt@przyklad.pl">kontakt@przyklad.pl</a>
+            <div class="dialog-actions">
+                <a class="btn btn-primary" href="mailto:kontakt@przyklad.pl" data-mail-link>Napisz e-mail</a>
+                <button class="btn" type="button" data-copy-mail>Kopiuj adres</button>
+            </div>
+        </div>
+    </dialog>
+
     <footer class="site-footer">
-        <!-- LINKEDIN: adres profilu (ikona w stopce) -->
-        <a class="footer-social" href="https://www.linkedin.com/in/ignacy-miko%C5%82ajczak-7b3b94244/" target="_blank" rel="noopener" aria-label="Profil na LinkedIn (otwiera się w nowej karcie)">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-        </a>
+        <p class="footer-cta">Chcesz porozmawiać o współpracy?</p>
+        <div class="footer-actions">
+            <button class="btn btn-primary" type="button" data-contact-open>Kontakt</button>
+            <!-- LINKEDIN: adres profilu (ikona w stopce) -->
+            <a class="footer-social" href="https://www.linkedin.com/in/ignacy-miko%C5%82ajczak-7b3b94244/" target="_blank" rel="noopener" aria-label="Profil na LinkedIn (otwiera się w nowej karcie)">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+        </div>
         <p>&copy; <span id="year">2026</span> Ignacy Mikołajczak. Psycholog sportu.</p>
     </footer>
 

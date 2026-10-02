@@ -194,20 +194,34 @@
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') closeMenu();
     });
+    // klik poza menu zamyka je
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.mobile-nav')) closeMenu();
+    });
 
     // ==========================================
     // 4. Aktywny link w menu, pasek postępu, cień nagłówka
     // ==========================================
 
-    var header = document.querySelector('.site-header');
+    // Menu boczne jak spis rozdziałów: każda kreska wypełnia się w miarę czytania swojej sekcji.
+    var chapters = Array.prototype.map.call(document.querySelectorAll('.side-nav a'), function (link) {
+        return { line: link.querySelector('.side-line'), section: document.querySelector(link.getAttribute('href')) };
+    }).filter(function (c) { return c.line && c.section; });
+
     var scrollTicking = false;
     function onScroll() {
         if (scrollTicking) return;
         scrollTicking = true;
         window.requestAnimationFrame(function () {
             var max = document.documentElement.scrollHeight - window.innerHeight;
-            header.style.setProperty('--progress', max > 0 ? (window.scrollY / max).toFixed(4) : 0);
-            header.classList.toggle('is-scrolled', window.scrollY > 20);
+
+            var readLine = window.innerHeight * 0.6;
+            var atBottom = max > 0 && window.scrollY >= max - 2;
+            chapters.forEach(function (c) {
+                var r = c.section.getBoundingClientRect();
+                var p = atBottom ? 1 : Math.min(1, Math.max(0, (readLine - r.top) / r.height));
+                c.line.style.setProperty('--p', p.toFixed(3));
+            });
             scrollTicking = false;
         });
     }
@@ -215,7 +229,7 @@
     onScroll();
 
     if ('IntersectionObserver' in window) {
-        var navLinks = navList.querySelectorAll('a');
+        var navLinks = document.querySelectorAll('.nav-list a, .side-nav a');
         var sectionObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (!entry.isIntersecting) return;
@@ -226,6 +240,62 @@
         }, { rootMargin: '-45% 0px -50% 0px' });
         document.querySelectorAll('main section[id]').forEach(function (s) { sectionObserver.observe(s); });
     }
+
+    // ==========================================
+    // Okno kontaktu
+    // ==========================================
+
+    var dialog = document.getElementById('kontakt');
+    var mailLink = dialog.querySelector('.contact-mail');
+    var email = mailLink.getAttribute('href').replace(/^mailto:/, '');
+    // adres wpisuje się tylko w linku .contact-mail, przycisk „Napisz e-mail” bierze go stąd
+    dialog.querySelector('[data-mail-link]').setAttribute('href', 'mailto:' + email);
+
+    function openContact() {
+        if (typeof dialog.showModal !== 'function') {
+            window.location.href = 'mailto:' + email; // bardzo stare przeglądarki
+            return;
+        }
+        closeMenu();
+        dialog.classList.remove('is-closing');
+        dialog.showModal();
+    }
+    function closeContact() {
+        if (!dialog.open) return;
+        if (reducedMotion) { dialog.close(); return; }
+        dialog.classList.add('is-closing');
+        window.setTimeout(function () {
+            dialog.classList.remove('is-closing');
+            dialog.close();
+        }, 280);
+    }
+
+    document.querySelectorAll('[data-contact-open]').forEach(function (btn) {
+        btn.addEventListener('click', openContact);
+    });
+    dialog.querySelector('[data-contact-close]').addEventListener('click', closeContact);
+    // klik w przyciemnione tło zamyka okno
+    dialog.addEventListener('click', function (e) {
+        if (e.target === dialog) closeContact();
+    });
+    // Esc: zamknięcie z animacją zamiast natychmiastowego
+    dialog.addEventListener('cancel', function (e) {
+        e.preventDefault();
+        closeContact();
+    });
+
+    var copyBtn = dialog.querySelector('[data-copy-mail]');
+    copyBtn.addEventListener('click', function () {
+        var done = function () {
+            copyBtn.textContent = 'Skopiowano ✓';
+            window.setTimeout(function () { copyBtn.textContent = 'Kopiuj adres'; }, 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(email).then(done, function () { window.prompt('Skopiuj adres:', email); });
+        } else {
+            window.prompt('Skopiuj adres:', email);
+        }
+    });
 
     var year = document.getElementById('year');
     if (year) year.textContent = new Date().getFullYear();

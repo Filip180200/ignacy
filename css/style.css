@@ -19,7 +19,6 @@
 
     --gutter: 1.25rem;
     --max-width: 1120px;
-    --header-h: 64px;
     --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -27,7 +26,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 * { border-radius: 0; }
 
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 1rem); }
+html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
 
 body {
     background: var(--bg);
@@ -68,35 +67,14 @@ h1, h2, h3 {
     z-index: -1; pointer-events: none; background: var(--bg);
 }
 
-/* ----- Nawigacja ----- */
-.site-header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(13, 13, 13, 0.88);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
-}
-
-.nav {
-    max-width: var(--max-width); height: var(--header-h);
-    margin: 0 auto; padding: 0 var(--gutter);
-    display: flex; align-items: center; justify-content: space-between;
-}
-
-.nav-logo {
-    display: flex; align-items: center; justify-content: center;
-    width: 42px; height: 42px;
-    border: 1px solid var(--line-strong);
-    font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700;
-    text-decoration: none; letter-spacing: 0.05em;
-    transition: border-color 0.3s var(--ease), color 0.3s var(--ease);
-}
-.nav-logo:hover { border-color: var(--accent); color: var(--accent); }
+/* ----- Nawigacja na telefonie / mniejszych ekranach: pływający przycisk w rogu, bez paska ----- */
+.mobile-nav { position: fixed; top: 0.75rem; right: 0.75rem; z-index: 100; }
 
 .nav-toggle {
     display: flex; flex-direction: column; justify-content: center; gap: 6px;
-    width: 42px; height: 42px; padding: 0 10px;
-    background: transparent; border: 1px solid var(--line-strong); cursor: pointer;
+    width: 44px; height: 44px; padding: 0 11px; margin-left: auto;
+    background: rgba(13, 13, 13, 0.9); border: 1px solid var(--line-strong); cursor: pointer;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
 .nav-toggle-line { display: block; height: 1px; background: var(--text); transition: transform 0.3s var(--ease); }
 .nav-toggle[aria-expanded="true"] .nav-toggle-line:first-of-type { transform: translateY(3.5px) rotate(45deg); }
@@ -104,40 +82,96 @@ h1, h2, h3 {
 
 .nav-list {
     display: none;
-    position: absolute; top: var(--header-h); left: 0; right: 0;
+    margin-top: 0.5rem; width: min(280px, calc(100vw - 1.5rem));
     background: rgba(13, 13, 13, 0.97);
-    border-bottom: 1px solid var(--line);
-    padding: 0.5rem var(--gutter) 1rem;
+    border: 1px solid var(--line-strong);
+    padding: 0.25rem 1.25rem 0.75rem;
 }
-.nav-list.is-open { display: block; }
-.nav-list a {
-    display: block; padding: 0.85rem 0;
-    border-bottom: 1px solid var(--line);
-    text-decoration: none; font-size: 0.8rem; font-weight: 500;
+.nav-list.is-open { display: block; animation: rise 0.35s var(--ease); }
+.nav-list a, .nav-list button {
+    display: block; width: 100%; padding: 0.85rem 0; text-align: left;
+    background: none; border: 0; border-bottom: 1px solid var(--line); cursor: pointer;
+    text-decoration: none; font-family: inherit; font-size: 0.8rem; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted);
 }
-.nav-list a:hover, .nav-list a.is-active { color: var(--text); }
+.nav-list li:last-child button { border-bottom: 0; color: var(--accent); }
+.nav-list a:hover, .nav-list a.is-active, .nav-list button:hover { color: var(--text); }
 
-@media (min-width: 860px) {
-    .nav-toggle { display: none; }
-    .nav-list {
-        display: flex; position: static; gap: 2.25rem;
-        background: none; border: 0; padding: 0;
+.btn-small { padding: 0.6rem 1.1rem; font-size: 0.72rem; }
+
+/* ----- Pionowe menu przy prawej krawędzi (od 1200 px) ----- */
+.side-nav { display: none; }
+
+@media (min-width: 1200px) {
+    .mobile-nav { display: none; }
+
+    .side-nav {
+        display: block;
+        position: fixed; right: 0; top: 50%; z-index: 90;
+        transform: translateY(-50%);
     }
-    .nav-list a {
-        position: relative; padding: 0.4rem 0; border: 0;
+    .side-nav ul { display: flex; flex-direction: column; gap: 0.35rem; }
+    .side-nav a {
+        display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem;
+        padding: 0.55rem 0 0.55rem 1rem;
+        text-decoration: none;
     }
-    .nav-list a::after {
-        content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
-        background: var(--accent);
-        transform: scaleX(0); transform-origin: left;
-        transition: transform 0.35s var(--ease);
+    /* Zwinięte: widać tylko kreski. Najechanie na menu (albo Tab) rozwija numery i nazwy. */
+    .side-label {
+        font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em;
+        color: var(--text-muted); white-space: nowrap;
+        background: rgba(13, 13, 13, 0.92); border: 1px solid var(--line); padding: 0.35rem 0.6rem;
     }
-    .nav-list a:hover::after, .nav-list a.is-active::after { transform: scaleX(1); }
+    .side-num { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; color: var(--text-muted); }
+    .side-label, .side-num {
+        opacity: 0; transform: translateX(14px); pointer-events: none;
+        transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), color 0.3s var(--ease);
+    }
+    .side-nav li:nth-child(2) .side-label, .side-nav li:nth-child(2) .side-num { transition-delay: 40ms; }
+    .side-nav li:nth-child(3) .side-label, .side-nav li:nth-child(3) .side-num { transition-delay: 80ms; }
+    .side-nav li:nth-child(4) .side-label, .side-nav li:nth-child(4) .side-num { transition-delay: 120ms; }
+    .side-nav:hover .side-label, .side-nav:hover .side-num,
+    .side-nav:focus-within .side-label, .side-nav:focus-within .side-num {
+        opacity: 1; transform: none;
+    }
+    /* Kreska = rozdział. Złote wypełnienie (--p, 0–1) pokazuje, ile z sekcji już przeczytano. */
+    .side-line {
+        position: relative; width: 2.5rem; height: 2px; background: var(--line-strong);
+        transition: height 0.3s var(--ease), background 0.3s var(--ease);
+    }
+    .side-line::after {
+        content: ""; position: absolute; inset: 0; background: var(--accent);
+        transform: scaleX(var(--p, 0)); transform-origin: left;
+        transition: transform 0.2s linear;
+    }
+    .side-nav a, .side-nav button { padding-right: 1.5rem; }
+    /* 5. „rozdział”: Kontakt, otwiera okno zamiast przewijać */
+    .side-nav button {
+        display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem; width: 100%;
+        padding-top: 0.55rem; padding-bottom: 0.55rem; padding-left: 1rem;
+        background: none; border: 0; cursor: pointer; font-family: inherit;
+    }
+    .side-nav li.side-contact { margin-top: 0.5rem; }
+    .side-contact .side-num, .side-contact .side-label { color: var(--accent); }
+    .side-contact .side-line { width: 0.9rem; height: 0.9rem; background: none; border: 1px solid var(--accent); transform: rotate(45deg); margin: 0 0.8rem; }
+    .side-contact .side-line::after { display: none; }
+    .side-nav button:hover .side-label { color: var(--text); }
+    .side-nav button:hover .side-line { background: var(--accent); }
+    .side-nav a:hover .side-label, .side-nav a:hover .side-num { color: var(--text); }
+    .side-nav a.is-active .side-num, .side-nav a.is-active .side-label { color: var(--accent); }
+    .side-nav a:hover .side-line { background: #666; }
+    .side-nav a.is-active .side-line { height: 3px; }
+
+    .js .side-nav li { animation: side-in 0.7s var(--ease) backwards; }
+    .js .side-nav li:nth-child(1) { animation-delay: 1.0s; }
+    .js .side-nav li:nth-child(2) { animation-delay: 1.1s; }
+    .js .side-nav li:nth-child(3) { animation-delay: 1.2s; }
+    .js .side-nav li:nth-child(4) { animation-delay: 1.3s; }
+    .js .side-nav li:nth-child(5) { animation-delay: 1.4s; }
 }
+@keyframes side-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
 
 /* ----- Wspólne bloki ----- */
-main { padding-top: var(--header-h); }
 
 .panel {
     background: var(--bg-panel);
@@ -180,7 +214,10 @@ main { padding-top: var(--header-h); }
     transition: background 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease), transform 0.3s var(--ease);
 }
 /* przy najechaniu tło „wjeżdża” od lewej */
-.btn { position: relative; isolation: isolate; overflow: hidden; }
+.btn {
+    position: relative; isolation: isolate; overflow: hidden;
+    background: transparent; color: var(--text); font-family: inherit; line-height: 1.4; cursor: pointer;
+}
 .btn::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
     background: var(--text);
@@ -195,7 +232,7 @@ main { padding-top: var(--header-h); }
 .hero {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 2.5rem var(--gutter) 1rem;
+    padding: 4.5rem var(--gutter) 1rem; /* miejsce na pływający przycisk menu */
 }
 .hero-inner {
     display: grid; gap: 2rem;
@@ -344,12 +381,59 @@ main { padding-top: var(--header-h); }
     .steps { grid-template-columns: repeat(4, 1fr); gap: 2rem; }
 }
 
-/* ----- Kontakt ----- */
-.contact { padding-bottom: 5rem; }
-.contact-panel { padding: 2.5rem 1.5rem; text-align: center; }
-.contact-panel .section-number::after { display: none; }
-.contact-panel h2 { margin-bottom: 1rem; }
-.contact-panel p { color: var(--text-muted); max-width: 34rem; margin: 0 auto; }
+main > .section:last-child { padding-bottom: 6rem; }
+
+/* ----- Kontakt: okno nad stroną ----- */
+.contact-dialog {
+    margin: auto; padding: 0; border: 0;
+    width: min(560px, calc(100% - 2 * var(--gutter)));
+    max-height: calc(100% - 2rem);
+    background: transparent; color: var(--text);
+    overflow: visible;
+}
+.contact-dialog::backdrop { background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.contact-dialog-inner {
+    position: relative; overflow: hidden;
+    background: #141414; border: 1px solid var(--line-strong);
+    padding: 2.75rem 1.5rem 2rem; text-align: center;
+}
+.contact-dialog-inner > :not(.hero-beam):not(.dialog-close) { position: relative; z-index: 1; }
+.contact-dialog-inner > .dialog-close { z-index: 2; }
+.contact-dialog-inner .hero-beam { width: 85%; height: 85%; }
+.contact-dialog h2 {
+    font-size: clamp(2.2rem, 7vw, 3rem); margin: 0.5rem 0 1rem;
+    background: linear-gradient(100deg, var(--accent) 0%, #d9c39a 35%, var(--text) 75%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.contact-dialog p { color: var(--text-muted); max-width: 30rem; margin: 0 auto; }
+.dialog-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 2rem; }
+
+.dialog-close {
+    position: absolute; top: 0.75rem; right: 0.75rem;
+    width: 40px; height: 40px; background: transparent; border: 1px solid var(--line-strong); cursor: pointer;
+    transition: border-color 0.3s var(--ease), transform 0.4s var(--ease);
+}
+.dialog-close span[aria-hidden]::before, .dialog-close span[aria-hidden]::after {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 1px; background: var(--text);
+}
+.dialog-close span[aria-hidden]::before { transform: translate(-50%, -50%) rotate(45deg); }
+.dialog-close span[aria-hidden]::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.dialog-close:hover { border-color: var(--accent); transform: rotate(90deg); }
+
+/* animacja otwierania / zamykania */
+.contact-dialog[open] .contact-dialog-inner { animation: dialog-in 0.6s var(--ease) both; }
+.contact-dialog[open]::backdrop { animation: fade-in 0.4s ease both; }
+.contact-dialog.is-closing .contact-dialog-inner { animation: dialog-out 0.3s var(--ease) both; }
+.contact-dialog.is-closing::backdrop { animation: fade-in 0.3s ease reverse both; }
+@keyframes dialog-in {
+    from { opacity: 0; transform: translateY(24px); clip-path: inset(0 0 100% 0); }
+    to   { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+@keyframes dialog-out { to { opacity: 0; transform: translateY(16px); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+@media (min-width: 640px) { .contact-dialog-inner { padding: 3.5rem 3rem 2.75rem; } }
+
 .contact-mail {
     display: inline-block; margin-top: 2rem;
     font-family: var(--font-serif); font-size: clamp(1.5rem, 6vw, 2.4rem); font-weight: 600;
@@ -361,7 +445,6 @@ main { padding-top: var(--header-h); }
 
 .icon { width: 1.1em; height: 1.1em; flex-shrink: 0; }
 
-@media (min-width: 860px) { .contact-panel { padding: 4rem; } }
 
 /* ----- Stopka ----- */
 .site-footer {
@@ -371,9 +454,15 @@ main { padding-top: var(--header-h); }
     background: rgba(13, 13, 13, 0.9);
     display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
 }
+.site-footer { padding-top: 3rem; padding-bottom: 2rem; gap: 1.25rem; }
+.footer-cta {
+    font-family: var(--font-serif); font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 600; line-height: 1.2;
+    color: var(--text);
+}
+.footer-actions { display: flex; align-items: stretch; gap: 0.75rem; margin-bottom: 0.75rem; }
 .footer-social {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 40px; height: 40px;
+    width: 48px; min-height: 40px;
     border: 1px solid var(--line-strong); color: var(--text-muted);
     transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
 }
@@ -430,9 +519,11 @@ main { padding-top: var(--header-h); }
 .marquee span {
     display: inline-flex; align-items: center; white-space: nowrap;
     padding: 1.1rem 0;
-    font-family: var(--font-serif); font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 500;
+    font-family: var(--font-serif); font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 600; font-style: italic;
     color: var(--text-muted);
 }
+/* co drugie hasło w kolorze akcentu */
+.marquee span:nth-child(even) { color: var(--accent); }
 .marquee span::after {
     content: ""; width: 7px; height: 7px; margin: 0 2.2rem;
     border: 1px solid var(--accent); transform: rotate(45deg);
@@ -442,15 +533,6 @@ main { padding-top: var(--header-h); }
 /* =========================================
    Animacje
    ========================================= */
-
-/* Pasek postępu przewijania (na górze, pod menu) */
-.scroll-progress {
-    position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
-    background: var(--accent);
-    transform: scaleX(var(--progress, 0)); transform-origin: left;
-}
-.site-header { transition: background 0.4s var(--ease); }
-.site-header.is-scrolled { background: rgba(10, 10, 10, 0.96); }
 
 /* Wejście sekcji powitalnej po załadowaniu strony (kolejność: --d) */
 @keyframes rise {
