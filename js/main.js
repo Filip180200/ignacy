@@ -102,8 +102,13 @@
                     subsection.hidden = true;
                     return;
                 }
-                items.forEach(function (item) {
-                    container.appendChild(render(item));
+                items.forEach(function (item, index) {
+                    var node = render(item);
+                    node.classList.add('reveal');
+                    node.style.setProperty('--i', index % 6);
+                    container.appendChild(node);
+                    observeReveal(node);
+                    if (node.classList.contains('exp-card')) bindTilt(node);
                 });
             })
             .catch(function (error) {
@@ -114,6 +119,56 @@
                 showError(container, isList, hint + ' Odśwież stronę, a jeśli problem wraca, sprawdź plik.');
             });
     }
+
+    // ==========================================
+    // Animacje: pojawianie się przy przewijaniu + przechylanie kart
+    // ==========================================
+
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    var revealObserver = 'IntersectionObserver' in window
+        ? new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' })
+        : null;
+
+    function observeReveal(node) {
+        if (revealObserver) revealObserver.observe(node);
+        else node.classList.add('in-view');
+    }
+
+    // Karta lekko przechyla się w stronę kursora (tylko mysz, bez „ogranicz ruch”).
+    function bindTilt(card) {
+        if (reducedMotion || !finePointer) return;
+        card.classList.add('tilt');
+        card.addEventListener('pointermove', function (e) {
+            var r = card.getBoundingClientRect();
+            var x = (e.clientX - r.left) / r.width - 0.5;
+            var y = (e.clientY - r.top) / r.height - 0.5;
+            card.style.setProperty('--rx', (-y * 5).toFixed(2) + 'deg');
+            card.style.setProperty('--ry', (x * 5).toFixed(2) + 'deg');
+        });
+        card.addEventListener('pointerleave', function () {
+            card.style.setProperty('--rx', '0deg');
+            card.style.setProperty('--ry', '0deg');
+        });
+    }
+
+    // Kolejność (--i) dla elementów w tej samej grupie, żeby pojawiały się kaskadowo.
+    document.querySelectorAll('.reveal').forEach(function (node) {
+        var siblings = Array.prototype.filter.call(node.parentNode.children, function (n) {
+            return n.classList.contains('reveal');
+        });
+        node.style.setProperty('--i', siblings.indexOf(node));
+        observeReveal(node);
+    });
+    document.querySelectorAll('.problem-card').forEach(bindTilt);
 
     document.querySelectorAll('[data-source]').forEach(loadList);
 
@@ -141,21 +196,25 @@
     });
 
     // ==========================================
-    // 4. Animacje przy przewijaniu + aktywny link w menu
+    // 4. Aktywny link w menu, pasek postępu, cień nagłówka
     // ==========================================
 
-    var reveals = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window) {
-        var revealObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-        reveals.forEach(function (node) { revealObserver.observe(node); });
+    var header = document.querySelector('.site-header');
+    var scrollTicking = false;
+    function onScroll() {
+        if (scrollTicking) return;
+        scrollTicking = true;
+        window.requestAnimationFrame(function () {
+            var max = document.documentElement.scrollHeight - window.innerHeight;
+            header.style.setProperty('--progress', max > 0 ? (window.scrollY / max).toFixed(4) : 0);
+            header.classList.toggle('is-scrolled', window.scrollY > 20);
+            scrollTicking = false;
+        });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
+    if ('IntersectionObserver' in window) {
         var navLinks = navList.querySelectorAll('a');
         var sectionObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
@@ -166,8 +225,6 @@
             });
         }, { rootMargin: '-45% 0px -50% 0px' });
         document.querySelectorAll('main section[id]').forEach(function (s) { sectionObserver.observe(s); });
-    } else {
-        reveals.forEach(function (node) { node.classList.add('in-view'); });
     }
 
     var year = document.getElementById('year');
@@ -183,13 +240,15 @@
     var ctx = canvas.getContext('2d');
     var config = {
         squareSize: 44,
-        speed: 0.25,
+        speed: 0.25,          // prędkość przesuwania siatki
+        parallax: reducedMotion ? 0 : 0.12, // jak mocno siatka reaguje na przewijanie strony
         lineColor: '#1f1f1f',
-        hoverColor: '#161616'
+        trailColor: '184, 149, 94', // kolor śladu za kursorem (RGB akcentu)
+        trailFade: 0.94       // im bliżej 1, tym dłużej ślad gaśnie
     };
-    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var offset = 0;
     var mouse = { x: null, y: null };
+    var trail = {};           // podświetlone kratki: "kolumna,wiersz" → jasność 0–1
     var width = 0;
     var height = 0;
 
@@ -205,19 +264,32 @@
 
     function draw() {
         var size = config.squareSize;
+        // przesunięcie siatki: ruch w czasie + paralaksa przy przewijaniu
+        var ox = offset;
+        var oy = (offset - window.scrollY * config.parallax) % size;
+        if (oy < 0) oy += size;
+
         ctx.clearRect(0, 0, width, height);
+
+        // ślad za kursorem: kratka pod myszą rozjaśnia się i powoli gaśnie
+        if (mouse.x !== null) {
+            var key = Math.floor((mouse.x - ox) / size) + ',' + Math.floor((mouse.y - oy) / size);
+            trail[key] = 1;
+        }
+        Object.keys(trail).forEach(function (k) {
+            var alpha = trail[k];
+            var parts = k.split(',');
+            ctx.fillStyle = 'rgba(' + config.trailColor + ',' + (alpha * 0.16).toFixed(3) + ')';
+            ctx.fillRect(parts[0] * size + ox, parts[1] * size + oy, size, size);
+            trail[k] = alpha * config.trailFade;
+            if (trail[k] < 0.02) delete trail[k];
+        });
+
         ctx.strokeStyle = config.lineColor;
         ctx.lineWidth = 1;
-
         for (var x = -size; x < width + size; x += size) {
             for (var y = -size; y < height + size; y += size) {
-                var sx = x + offset;
-                var sy = y + offset;
-                if (mouse.x !== null && mouse.x >= sx && mouse.x < sx + size && mouse.y >= sy && mouse.y < sy + size) {
-                    ctx.fillStyle = config.hoverColor;
-                    ctx.fillRect(sx, sy, size, size);
-                }
-                ctx.strokeRect(Math.round(sx) + 0.5, Math.round(sy) + 0.5, size, size);
+                ctx.strokeRect(Math.round(x + ox) + 0.5, Math.round(y + oy) + 0.5, size, size);
             }
         }
 

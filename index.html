@@ -21,6 +21,7 @@
     <a class="skip-link" href="#o-mnie">Przejdź do treści</a>
 
     <header class="site-header">
+        <div class="scroll-progress" aria-hidden="true"></div>
         <nav class="nav" aria-label="Nawigacja główna">
             <a href="#start" class="nav-logo" aria-label="Ignacy Mikołajczak — początek strony">
                 <span aria-hidden="true">IM</span>
@@ -44,20 +45,32 @@
         <!-- ===== START ===== -->
         <section class="hero" id="start" aria-labelledby="hero-title">
             <div class="hero-inner panel">
-                <figure class="hero-photo">
+                <div class="hero-beam" aria-hidden="true"></div>
+                <figure class="hero-photo hero-anim" style="--d: 0">
                     <img src="img/portrait.svg" alt="Portret Ignacego Mikołajczaka" width="480" height="600">
                 </figure>
                 <div class="hero-text">
-                    <p class="eyebrow">Psycholog sportu · Wrocław</p>
-                    <h1 id="hero-title">Ignacy Mikołajczak</h1>
-                    <p class="lead">Piłka nożna jest ze mną od mundialu w 2006 roku i przez wiele lat sam grałem. Dziś jako psycholog sportu wspieram zawodników, drużyny, trenerów i rodziców, bo sport to coś więcej niż wynik.</p>
-                    <div class="hero-actions">
+                    <p class="eyebrow hero-anim" style="--d: 2">Psycholog sportu · Wrocław</p>
+                    <h1 id="hero-title">
+                        <span class="line"><span class="hero-anim" style="--d: 3">Ignacy</span></span>
+                        <span class="line"><span class="hero-anim" style="--d: 4">Mikołajczak</span></span>
+                    </h1>
+                    <p class="lead hero-anim" style="--d: 5">Piłka nożna jest ze mną od mundialu w 2006 roku i przez wiele lat sam grałem. Dziś jako psycholog sportu wspieram zawodników, drużyny, trenerów i rodziców, bo sport to coś więcej niż wynik.</p>
+                    <div class="hero-actions hero-anim" style="--d: 6">
                         <a class="btn btn-primary" href="#kontakt">Umów konsultację</a>
                         <a class="btn" href="#o-mnie">Poznaj mnie</a>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Przesuwający się pasek z hasłami (ozdobny, czytniki ekranu go pomijają) -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>Stres startowy</span><span>Koncentracja</span><span>Powrót po kontuzji</span><span>Motywacja</span><span>Wypalenie</span><span>Presja wyniku</span><span>Piłka nożna</span><span>Piłka ręczna</span>
+                <span>Stres startowy</span><span>Koncentracja</span><span>Powrót po kontuzji</span><span>Motywacja</span><span>Wypalenie</span><span>Presja wyniku</span><span>Piłka nożna</span><span>Piłka ręczna</span>
+            </div>
+        </div>
 
         <!-- ===== 1. O MNIE ===== -->
         <section class="section" id="o-mnie" aria-labelledby="o-mnie-title">

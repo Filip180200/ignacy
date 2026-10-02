@@ -179,9 +179,17 @@ main { padding-top: var(--header-h); }
     text-transform: uppercase; letter-spacing: 0.14em;
     transition: background 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease), transform 0.3s var(--ease);
 }
-.btn:hover { border-color: var(--text); transform: translateY(-2px); }
+/* przy najechaniu tło „wjeżdża” od lewej */
+.btn { position: relative; isolation: isolate; overflow: hidden; }
+.btn::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: var(--text);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.45s var(--ease);
+}
+.btn:hover::before { transform: scaleX(1); transform-origin: left; }
+.btn:hover { border-color: var(--text); color: #111; transform: translateY(-2px); }
 .btn-primary { background: var(--accent); border-color: var(--accent); color: #111; }
-.btn-primary:hover { background: #cdaa72; border-color: #cdaa72; }
 
 /* ----- Hero ----- */
 .hero {
@@ -193,9 +201,19 @@ main { padding-top: var(--header-h); }
     display: grid; gap: 2rem;
     padding: 1.5rem;
 }
-.hero-photo { border: 1px solid var(--line-strong); max-width: 360px; }
-.hero-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.hero-photo { position: relative; border: 1px solid var(--line-strong); max-width: 360px; margin-right: 14px; margin-bottom: 14px; }
+.hero-photo img { position: relative; z-index: 1; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+/* przesunięta ramka w kolorze akcentu za zdjęciem */
+.hero-photo::after {
+    content: ""; position: absolute; inset: 0;
+    border: 1px solid var(--accent);
+    transform: translate(14px, 14px);
+    transition: transform 0.5s var(--ease);
+}
+.hero-photo:hover::after { transform: translate(7px, 7px); }
 .hero-text h1 { font-size: clamp(2.6rem, 10vw, 4.6rem); margin: 0.6rem 0 1.25rem; }
+.hero-text h1 .line { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.hero-text h1 .line > span { display: inline-block; }
 .lead { font-size: 1.1rem; color: var(--text-muted); max-width: 34rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
 
@@ -251,7 +269,13 @@ main { padding-top: var(--header-h); }
     transition: border-color 0.35s var(--ease), transform 0.35s var(--ease), background 0.35s var(--ease);
 }
 .exp-card:hover { border-color: var(--line-strong); background: var(--bg-card-hover); transform: translateY(-3px); }
-.exp-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-bottom: 1px solid var(--line); }
+.exp-card { overflow: hidden; }
+.exp-card img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-bottom: 1px solid var(--line);
+    transition: transform 0.8s var(--ease), filter 0.8s var(--ease);
+    filter: grayscale(0.6);
+}
+.exp-card:hover img { transform: scale(1.05); filter: grayscale(0); }
 .exp-body { padding: 1.25rem 1.25rem 1.5rem; }
 .exp-body h4 { font-family: var(--font-serif); font-size: 1.45rem; font-weight: 600; margin: 0.2rem 0 0.15rem; }
 .exp-role { color: var(--accent); font-weight: 500; font-size: 0.95rem; }
@@ -356,15 +380,135 @@ main { padding-top: var(--header-h); }
 .footer-social .icon { width: 18px; height: 18px; }
 .footer-social:hover { color: var(--accent); border-color: var(--accent); }
 
-/* ----- Animacje przy przewijaniu ----- */
-.js .reveal {
-    opacity: 0; transform: translateY(18px);
-    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+/* =========================================
+   Akcenty w stylu auxility.ca: gradient w nagłówkach, snop światła,
+   ścięty róg przycisku, przesuwający się pasek
+   ========================================= */
+
+/* Nagłówki: przejście od akcentu do jasnego tekstu */
+.hero-text h1 .line > span,
+.section h2 {
+    background: linear-gradient(100deg, var(--accent) 0%, #d9c39a 35%, var(--text) 75%);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
 }
-.js .reveal.in-view { opacity: 1; transform: none; }
+
+/* Snop światła o ostrych krawędziach za tekstem sekcji powitalnej */
+.hero-inner { position: relative; overflow: hidden; }
+.hero-inner > :not(.hero-beam) { position: relative; z-index: 1; }
+.hero-beam {
+    position: absolute; z-index: 0; pointer-events: none;
+    right: 0; bottom: 0; width: 70%; height: 75%;
+    background: linear-gradient(200deg, rgba(184, 149, 94, 0.30) 0%, rgba(184, 149, 94, 0.08) 45%, rgba(184, 149, 94, 0) 80%);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    transform-origin: 100% 100%;
+}
+.js .hero-beam { animation: beam-in 1.6s var(--ease) 0.6s backwards, beam-breathe 7s ease-in-out 2.2s infinite alternate; }
+@keyframes beam-in { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+@keyframes beam-breathe { from { opacity: 1; } to { opacity: 0.55; } }
+
+/* Ścięty róg przycisku głównego */
+.btn-primary::after {
+    content: ""; position: absolute; top: 0; left: 0; width: 16px; height: 16px;
+    background: rgba(255, 255, 255, 0.45);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    transition: width 0.4s var(--ease), height 0.4s var(--ease);
+}
+.btn-primary:hover::after { width: 24px; height: 24px; }
+
+/* Przesuwający się pasek z hasłami */
+.marquee {
+    margin-top: 3rem;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    background: rgba(13, 13, 13, 0.85);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee span {
+    display: inline-flex; align-items: center; white-space: nowrap;
+    padding: 1.1rem 0;
+    font-family: var(--font-serif); font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 500;
+    color: var(--text-muted);
+}
+.marquee span::after {
+    content: ""; width: 7px; height: 7px; margin: 0 2.2rem;
+    border: 1px solid var(--accent); transform: rotate(45deg);
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* =========================================
+   Animacje
+   ========================================= */
+
+/* Pasek postępu przewijania (na górze, pod menu) */
+.scroll-progress {
+    position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
+    background: var(--accent);
+    transform: scaleX(var(--progress, 0)); transform-origin: left;
+}
+.site-header { transition: background 0.4s var(--ease); }
+.site-header.is-scrolled { background: rgba(10, 10, 10, 0.96); }
+
+/* Wejście sekcji powitalnej po załadowaniu strony (kolejność: --d) */
+@keyframes rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes line-up {
+    from { transform: translateY(105%); }
+    to   { transform: none; }
+}
+@keyframes wipe {
+    from { clip-path: inset(0 0 100% 0); }
+    to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes frame-in {
+    from { opacity: 0; transform: translate(0, 0); }
+    to   { opacity: 1; transform: translate(14px, 14px); }
+}
+.js .hero-anim { animation: rise 0.9s var(--ease) backwards; animation-delay: calc(var(--d, 0) * 110ms + 100ms); }
+.js .hero-text h1 .hero-anim { animation-name: line-up; animation-duration: 1s; }
+.js .hero-photo.hero-anim { animation-name: wipe; animation-duration: 1.2s; }
+.js .hero-photo::after { animation: frame-in 0.9s var(--ease) 1.3s backwards; }
+
+/* Elementy pojawiające się przy przewijaniu. --i = kolejność w grupie (opóźnienie kaskadowe).
+   Używamy animacji z wypełnieniem „backwards”, żeby po jej zakończeniu działały efekty hover. */
+.js .reveal:not(.in-view) { opacity: 0; }
+.js .reveal.in-view {
+    animation: rise 0.8s var(--ease) backwards;
+    animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+/* Linia przy numerze sekcji rysuje się od lewej */
+.js .reveal .section-number::after { transform: scaleX(0); transform-origin: left; transition: transform 0.9s var(--ease) 0.35s; }
+.js .reveal.in-view .section-number::after { transform: scaleX(1); }
+
+/* Linia osi czasu rysuje się z góry na dół */
+.js .reveal .timeline::before { transform: scaleY(0); transform-origin: top; transition: transform 1.4s var(--ease) 0.3s; }
+.js .reveal.in-view .timeline::before { transform: scaleY(1); }
+
+/* Kroki współpracy: górna linia rysuje się po kolei */
+.step::before {
+    content: ""; position: absolute; top: -1px; left: 0; width: 100%; height: 1px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.9s var(--ease);
+    transition-delay: calc(var(--i, 0) * 150ms + 300ms);
+}
+.js .step.in-view::before { transform: scaleX(1); }
+html:not(.js) .step::before { transform: scaleX(1); }
+
+/* Karty: lekkie przechylenie 3D za kursorem (ustawiane w js/main.js) */
+.tilt, .tilt:hover { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px)); }
+.tilt:hover { --lift: -4px; }
 
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; animation: none !important; }
-    .js .reveal { opacity: 1; transform: none; }
+    .js .reveal:not(.in-view) { opacity: 1; }
+    .js .reveal .section-number::after, .js .reveal .timeline::before, .step::before { transform: none; }
+    .tilt { transform: none; }
 }
