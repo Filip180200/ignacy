@@ -335,10 +335,7 @@ main { padding-top: var(--header-h); }
 }
 .contact-mail:hover { color: var(--accent); }
 
-.contact-social { margin-top: 2rem; }
-
 .icon { width: 1.1em; height: 1.1em; flex-shrink: 0; }
-.btn-linkedin { display: inline-flex; align-items: center; gap: 0.6rem; }
 
 @media (min-width: 860px) { .contact-panel { padding: 4rem; } }
 

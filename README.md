@@ -108,8 +108,7 @@ Przykładowe szare obrazki (`.svg`) możesz potem usunąć.
 Otwórz `index.html` i wyszukaj `kontakt@przyklad.pl` (na github.com w trybie edycji: Ctrl+F).
 Adres występuje **dwa razy w tej samej linijce**: po `mailto:` i jako widoczny tekst. Zmień oba.
 
-**LinkedIn:** link do profilu jest w `index.html` w dwóch miejscach (przycisk w sekcji Kontakt i ikona
-w stopce). Wyszukaj `linkedin.com` i zmień oba adresy.
+**LinkedIn:** link do profilu to ikona w stopce, w `index.html`. Wyszukaj `linkedin.com` i zmień adres.
 
 ## 4. Jak opublikować stronę na GitHub Pages
 
