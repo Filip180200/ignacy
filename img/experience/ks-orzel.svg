@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="KS Orzeł Leszno">
+  <rect width="800" height="600" fill="#242424"/>
+  <rect x="16" y="16" width="768" height="568" fill="none" stroke="#3a3a3a" stroke-width="1"/>
+  <text x="50%" y="48%" fill="#8a8781" font-family="Inter, Arial, sans-serif" font-size="36" text-anchor="middle">KS Orzeł Leszno</text>
+  <text x="50%" y="56%" fill="#5f5d59" font-family="Inter, Arial, sans-serif" font-size="24" text-anchor="middle">zdjęcie 4:3, np. 1200 × 900 px</text>
+</svg>

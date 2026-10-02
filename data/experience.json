@@ -1,0 +1,23 @@
+[
+  {
+    "role": "Psycholog sportu",
+    "organization": "Akademia Piłkarska Warta Młodzi",
+    "period": "2023 – obecnie",
+    "image": "img/experience/akademia-warta.svg",
+    "description": "Prowadzę indywidualne sesje z zawodnikami w wieku 14–19 lat oraz warsztaty grupowe z koncentracji i radzenia sobie z presją. Współtworzę program przygotowania mentalnego dla wszystkich roczników akademii. Raz w miesiącu prowadzę spotkania edukacyjne dla rodziców."
+  },
+  {
+    "role": "Psycholog sportu (współpraca)",
+    "organization": "Klub Sportowy Orzeł Leszno — pierwsza drużyna",
+    "period": "2022 – 2024",
+    "image": "img/experience/ks-orzel.svg",
+    "description": "Wspierałem sztab szkoleniowy drużyny III ligi w okresie walki o utrzymanie. Pracowałem z zawodnikami wracającymi po długich kontuzjach i przygotowywałem bramkarzy do serii rzutów karnych. Prowadziłem też szkolenie dla trenerów z komunikacji z zawodnikiem po porażce."
+  },
+  {
+    "role": "Psycholog — praktyka prywatna",
+    "organization": "Gabinet psychologii sportu, Poznań",
+    "period": "2021 – obecnie",
+    "image": "img/experience/gabinet.svg",
+    "description": "Pracuję indywidualnie ze sportowcami różnych dyscyplin: piłkarzami, tenisistami, biegaczami i zawodnikami sportów walki. Zajmuję się stresem startowym, wypaleniem i planowaniem kariery po zakończeniu gry. Sesje prowadzę stacjonarnie i online."
+  }
+]

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ignacy Mikołajczak — psycholog sportu</title>
+    <!-- Treści są na razie przykładowe. Usuń linijkę poniżej, gdy wpiszesz prawdziwe dane (README, punkt 7). -->
+    <meta name="robots" content="noindex">
+    <meta name="description" content="Ignacy Mikołajczak — psycholog sportu, były piłkarz. Pomagam sportowcom radzić sobie ze stresem startowym, presją wyniku, powrotem po kontuzji i utrzymaniem motywacji.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap&subset=latin-ext">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+    <canvas id="grid-canvas" aria-hidden="true"></canvas>
+
+    <a class="skip-link" href="#o-mnie">Przejdź do treści</a>
+
+    <header class="site-header">
+        <nav class="nav" aria-label="Nawigacja główna">
+            <a href="#start" class="nav-logo" aria-label="Ignacy Mikołajczak — początek strony">
+                <span aria-hidden="true">IM</span>
+            </a>
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
+                <span class="visually-hidden">Menu</span>
+                <span class="nav-toggle-line" aria-hidden="true"></span>
+                <span class="nav-toggle-line" aria-hidden="true"></span>
+            </button>
+            <ul class="nav-list" id="nav-list">
+                <li><a href="#o-mnie">O mnie</a></li>
+                <li><a href="#filozofia">Filozofia</a></li>
+                <li><a href="#problemy">W czym pomagam</a></li>
+                <li><a href="#wspolpraca">Współpraca</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ===== START ===== -->
+        <section class="hero" id="start" aria-labelledby="hero-title">
+            <div class="hero-inner panel">
+                <figure class="hero-photo">
+                    <img src="img/portrait.svg" alt="Portret Ignacego Mikołajczaka" width="480" height="600">
+                </figure>
+                <div class="hero-text">
+                    <p class="eyebrow">Psycholog sportu</p>
+                    <h1 id="hero-title">Ignacy Mikołajczak</h1>
+                    <p class="lead">Przez kilkanaście lat grałem w piłkę. Dziś pomagam sportowcom i trenerom zadbać o tę część formy, której nie widać na boisku, ale która często decyduje o wyniku.</p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#kontakt">Umów konsultację</a>
+                        <a class="btn" href="#o-mnie">Poznaj mnie</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 1. O MNIE ===== -->
+        <section class="section" id="o-mnie" aria-labelledby="o-mnie-title">
+            <header class="section-header reveal">
+                <p class="section-number" aria-hidden="true">01</p>
+                <h2 id="o-mnie-title">O mnie</h2>
+                <p class="section-intro">Łączę doświadczenie zawodnika z wiedzą psychologiczną. Wiem, jak wygląda szatnia przed meczem o awans i jak trudno wraca się do gry po długiej przerwie, a w pracy opieram się na metodach o potwierdzonej skuteczności.</p>
+            </header>
+
+            <div class="subsection reveal">
+                <h3 class="subsection-title">Kariera sportowa</h3>
+                <ol class="timeline" id="career-list" data-source="data/career.json" data-render="career">
+                    <li class="data-status">Wczytywanie…</li>
+                </ol>
+            </div>
+
+            <div class="subsection reveal">
+                <h3 class="subsection-title">Edukacja</h3>
+                <ul class="edu-list" id="education-list" data-source="data/education.json" data-render="education">
+                    <li class="data-status">Wczytywanie…</li>
+                </ul>
+            </div>
+
+            <div class="subsection reveal">
+                <h3 class="subsection-title">Doświadczenie zawodowe</h3>
+                <div class="experience-grid" id="experience-list" data-source="data/experience.json" data-render="experience">
+                    <p class="data-status">Wczytywanie…</p>
+                </div>
+            </div>
+
+            <noscript>
+                <p class="data-status data-error">Kariera, edukacja i doświadczenie wyświetlają się po włączeniu JavaScriptu w przeglądarce.</p>
+            </noscript>
+        </section>
+
+        <!-- ===== 2. FILOZOFIA ===== -->
+        <section class="section" id="filozofia" aria-labelledby="filozofia-title">
+            <header class="section-header reveal">
+                <p class="section-number" aria-hidden="true">02</p>
+                <h2 id="filozofia-title">Moja filozofia</h2>
+            </header>
+            <ol class="philosophy">
+                <li class="reveal">
+                    <h3>Najpierw człowiek, potem zawodnik</h3>
+                    <p>Wynik sportowy to tylko część życia. Zaczynam od tego, kim jesteś poza boiskiem, bo dopiero wtedy wiem, co naprawdę wpływa na Twoją formę.</p>
+                </li>
+                <li class="reveal">
+                    <h3>Metody sprawdzone w badaniach</h3>
+                    <p>Pracuję narzędziami, których skuteczność potwierdzono w badaniach z psychologii sportu: treningiem uwagi, regulacją pobudzenia, wyznaczaniem celów i rutynami przedstartowymi.</p>
+                </li>
+                <li class="reveal">
+                    <h3>Umiejętności, które się trenuje</h3>
+                    <p>Pewność siebie i koncentracja to nie cechy, z którymi się rodzimy. Można je ćwiczyć tak samo systematycznie jak szybkość czy technikę.</p>
+                </li>
+                <li class="reveal">
+                    <h3>Współpraca z trenerem i sztabem</h3>
+                    <p>Jeśli zawodnik się na to zgadza, ustalam wspólny kierunek z trenerem, fizjoterapeutą i rodzicami. Przy tym zawsze szanuję poufność rozmów.</p>
+                </li>
+                <li class="reveal">
+                    <h3>Samodzielność zamiast zależności</h3>
+                    <p>Moim celem jest, by zawodnik z czasem coraz rzadziej potrzebował mojego wsparcia i w kluczowym momencie meczu umiał sam sięgnąć po właściwe narzędzia.</p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- ===== 3. PROBLEMY ===== -->
+        <section class="section" id="problemy" aria-labelledby="problemy-title">
+            <header class="section-header reveal">
+                <p class="section-number" aria-hidden="true">03</p>
+                <h2 id="problemy-title">Jakie problemy pomagam rozwiązać</h2>
+            </header>
+            <ul class="problem-grid">
+                <li class="problem-card reveal">
+                    <h3>Stres startowy</h3>
+                    <p>Ścisk w żołądku przed meczem, nieprzespana noc przed zawodami, „sparaliżowane” nogi w pierwszych minutach. Uczymy się regulować pobudzenie tak, by pracowało na Twoją korzyść.</p>
+                </li>
+                <li class="problem-card reveal">
+                    <h3>Koncentracja</h3>
+                    <p>Rozproszenie po błędzie, myślenie o wyniku zamiast o kolejnej akcji. Ćwiczymy powrót uwagi do „tu i teraz” w ciągu kilku sekund.</p>
+                </li>
+                <li class="problem-card reveal">
+                    <h3>Powrót po kontuzji</h3>
+                    <p>Lęk przed ponownym urazem i utrata zaufania do własnego ciała. Wspieram zawodnika na każdym etapie rehabilitacji, w kontakcie z fizjoterapeutą.</p>
+                </li>
+                <li class="problem-card reveal">
+                    <h3>Motywacja</h3>
+                    <p>Spadek zaangażowania, trening „na autopilocie”, brak jasnego celu. Wspólnie szukamy tego, co naprawdę napędza Cię do pracy.</p>
+                </li>
+                <li class="problem-card reveal">
+                    <h3>Wypalenie</h3>
+                    <p>Chroniczne zmęczenie, cynizm wobec sportu i poczucie, że wysiłek nie ma sensu. Pomagam odbudować równowagę między obciążeniem a regeneracją.</p>
+                </li>
+                <li class="problem-card reveal">
+                    <h3>Presja wyniku</h3>
+                    <p>Oczekiwania trenera, rodziców, kibiców i własne. Uczymy się oddzielać wartość człowieka od rezultatu meczu i grać odważniej.</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ===== 4. WSPÓŁPRACA ===== -->
+        <section class="section" id="wspolpraca" aria-labelledby="wspolpraca-title">
+            <header class="section-header reveal">
+                <p class="section-number" aria-hidden="true">04</p>
+                <h2 id="wspolpraca-title">Jak wygląda współpraca</h2>
+            </header>
+            <ol class="steps">
+                <li class="step reveal">
+                    <span class="step-number" aria-hidden="true">1</span>
+                    <h3>Konsultacja wstępna</h3>
+                    <p>Bezpłatna, 30-minutowa rozmowa online. Opowiadasz, z czym przychodzisz, a ja wyjaśniam, jak mogę pomóc i czy współpraca ma sens.</p>
+                </li>
+                <li class="step reveal">
+                    <span class="step-number" aria-hidden="true">2</span>
+                    <h3>Diagnoza</h3>
+                    <p>Jedno lub dwa spotkania, wywiad i standaryzowane kwestionariusze. Na tej podstawie ustalamy konkretne, mierzalne cele.</p>
+                </li>
+                <li class="step reveal">
+                    <span class="step-number" aria-hidden="true">3</span>
+                    <h3>Regularne sesje</h3>
+                    <p>Spotkania co tydzień lub co dwa tygodnie, stacjonarnie albo online. Między sesjami ćwiczysz konkretne techniki na treningach i w meczach.</p>
+                </li>
+                <li class="step reveal">
+                    <span class="step-number" aria-hidden="true">4</span>
+                    <h3>Ewaluacja</h3>
+                    <p>Co kilka tygodni sprawdzamy postępy względem celów i decydujemy, czy kontynuować, zmienić kierunek, czy zakończyć współpracę.</p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- ===== 5. KONTAKT ===== -->
+        <section class="section contact" id="kontakt" aria-labelledby="kontakt-title">
+            <div class="panel contact-panel reveal">
+                <p class="section-number" aria-hidden="true">05</p>
+                <h2 id="kontakt-title">Kontakt</h2>
+                <p>Napisz w kilku zdaniach, jaki sport uprawiasz i z czym chcesz pracować. Odpowiadam w ciągu dwóch dni roboczych.</p>
+                <!-- ADRES E-MAIL: zmień w dwóch miejscach w linijce poniżej (po "mailto:" i w tekście linku) -->
+                <a class="contact-mail" href="mailto:kontakt@przyklad.pl">kontakt@przyklad.pl</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; <span id="year">2026</span> Ignacy Mikołajczak. Psycholog sportu.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
