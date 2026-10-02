@@ -335,6 +335,11 @@ main { padding-top: var(--header-h); }
 }
 .contact-mail:hover { color: var(--accent); }
 
+.contact-social { margin-top: 2rem; }
+
+.icon { width: 1.1em; height: 1.1em; flex-shrink: 0; }
+.btn-linkedin { display: inline-flex; align-items: center; gap: 0.6rem; }
+
 @media (min-width: 860px) { .contact-panel { padding: 4rem; } }
 
 /* ----- Stopka ----- */
@@ -343,7 +348,16 @@ main { padding-top: var(--header-h); }
     padding: 1.5rem var(--gutter);
     text-align: center; font-size: 0.8rem; color: var(--text-muted);
     background: rgba(13, 13, 13, 0.9);
+    display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
 }
+.footer-social {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px;
+    border: 1px solid var(--line-strong); color: var(--text-muted);
+    transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.footer-social .icon { width: 18px; height: 18px; }
+.footer-social:hover { color: var(--accent); border-color: var(--accent); }
 
 /* ----- Animacje przy przewijaniu ----- */
 .js .reveal {

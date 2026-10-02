@@ -96,6 +96,12 @@
             .then(function (items) {
                 if (!Array.isArray(items)) throw new Error('Plik nie zawiera listy [ ... ]');
                 container.textContent = '';
+                // Pusty plik ([]) → cała podsekcja (z nagłówkiem) się chowa.
+                var subsection = container.closest('.subsection');
+                if (items.length === 0 && subsection) {
+                    subsection.hidden = true;
+                    return;
+                }
                 items.forEach(function (item) {
                     container.appendChild(render(item));
                 });

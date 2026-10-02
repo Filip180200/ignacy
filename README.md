@@ -64,6 +64,20 @@ Pola w pozostałych plikach:
 
 Jeśli nie chcesz jakiegoś pola, zostaw puste cudzysłowy (`""`). Wtedy ta linijka się nie wyświetli.
 
+Jeśli plik zawiera pustą listę `[]`, cała podsekcja razem z nagłówkiem jest ukryta. Tak jest teraz
+z edukacją: wystarczy dodać do `education.json` pierwszy wpis, a sekcja się pojawi:
+
+```json
+[
+  {
+    "period": "2019 – 2024",
+    "degree": "Psychologia, studia magisterskie",
+    "school": "Nazwa uczelni",
+    "description": ""
+  }
+]
+```
+
 ### Zasady, których trzeba pilnować
 
 - **Przecinek między wpisami**: po każdym `}` stoi przecinek, **oprócz ostatniego wpisu** w pliku.
@@ -93,6 +107,9 @@ Przykładowe szare obrazki (`.svg`) możesz potem usunąć.
 
 Otwórz `index.html` i wyszukaj `kontakt@przyklad.pl` (na github.com w trybie edycji: Ctrl+F).
 Adres występuje **dwa razy w tej samej linijce**: po `mailto:` i jako widoczny tekst. Zmień oba.
+
+**LinkedIn:** link do profilu jest w `index.html` w dwóch miejscach (przycisk w sekcji Kontakt i ikona
+w stopce). Wyszukaj `linkedin.com` i zmień oba adresy.
 
 ## 4. Jak opublikować stronę na GitHub Pages
 
