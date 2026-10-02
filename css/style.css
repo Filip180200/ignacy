@@ -146,6 +146,16 @@ h1, h2, h3 {
         transition: transform 0.2s linear;
     }
     .side-nav a { padding-right: 1.5rem; }
+    /* 05 Kontakt: romb zamiast kreski, wypełnia się od środka po dotarciu do sekcji */
+    .side-nav li.side-contact { margin-top: 0.6rem; }
+    .side-contact .side-num, .side-contact .side-label { color: var(--accent); }
+    .side-contact .side-line {
+        width: 0.85rem; height: 0.85rem; margin: 0 0.83rem;
+        background: none; border: 1px solid var(--accent); transform: rotate(45deg);
+    }
+    .side-contact .side-line::after { inset: 2px; transform: scale(var(--p, 0)); transform-origin: center; }
+    .side-nav .side-contact a:hover .side-line { background: rgba(184, 149, 94, 0.25); }
+    .side-nav .side-contact a.is-active .side-line { height: 0.85rem; }
     .side-nav a:hover .side-label, .side-nav a:hover .side-num { color: var(--text); }
     .side-nav a.is-active .side-num, .side-nav a.is-active .side-label { color: var(--accent); }
     .side-nav a:hover .side-line { background: #666; }
@@ -371,6 +381,23 @@ h1, h2, h3 {
 }
 
 main > .section:last-child { padding-bottom: 6rem; }
+
+/* ----- Sekcja 05: kontakt w lekko widocznej ramce, wyśrodkowany ----- */
+.contact-panel {
+    position: relative; overflow: hidden;
+    max-width: 760px; margin: 0 auto;
+    padding: 3rem 1.5rem; text-align: center;
+}
+.contact-panel > :not(.hero-beam) { position: relative; z-index: 1; }
+/* kreski po obu stronach numeru: —— 05 —— */
+.contact-panel .section-number::before {
+    content: ""; display: inline-block; width: 3rem; height: 1px;
+    background: var(--accent); vertical-align: middle; margin-right: 0.75rem;
+    transform: scaleX(0); transform-origin: right; transition: transform 0.9s var(--ease) 0.35s;
+}
+.contact-panel.in-view .section-number::before, html:not(.js) .contact-panel .section-number::before { transform: scaleX(1); }
+.contact-panel .section-intro { max-width: 34rem; margin: 1.25rem auto 2rem; }
+@media (min-width: 860px) { .contact-panel { padding: 4rem 3rem; } }
 
 /* ----- Kontakt: okno nad stroną ----- */
 .contact-dialog {
