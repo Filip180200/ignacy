@@ -94,7 +94,7 @@ h1, h2, h3 {
     text-decoration: none; font-family: inherit; font-size: 0.8rem; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted);
 }
-.nav-list li:last-child button { border-bottom: 0; color: var(--accent); }
+.nav-list li:last-child a { border-bottom: 0; }
 .nav-list a:hover, .nav-list a.is-active, .nav-list button:hover { color: var(--text); }
 
 .btn-small { padding: 0.6rem 1.1rem; font-size: 0.72rem; }
@@ -130,6 +130,7 @@ h1, h2, h3 {
     .side-nav li:nth-child(2) .side-label, .side-nav li:nth-child(2) .side-num { transition-delay: 40ms; }
     .side-nav li:nth-child(3) .side-label, .side-nav li:nth-child(3) .side-num { transition-delay: 80ms; }
     .side-nav li:nth-child(4) .side-label, .side-nav li:nth-child(4) .side-num { transition-delay: 120ms; }
+    .side-nav li:nth-child(5) .side-label, .side-nav li:nth-child(5) .side-num { transition-delay: 160ms; }
     .side-nav:hover .side-label, .side-nav:hover .side-num,
     .side-nav:focus-within .side-label, .side-nav:focus-within .side-num {
         opacity: 1; transform: none;
@@ -144,19 +145,7 @@ h1, h2, h3 {
         transform: scaleX(var(--p, 0)); transform-origin: left;
         transition: transform 0.2s linear;
     }
-    .side-nav a, .side-nav button { padding-right: 1.5rem; }
-    /* 5. „rozdział”: Kontakt, otwiera okno zamiast przewijać */
-    .side-nav button {
-        display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem; width: 100%;
-        padding-top: 0.55rem; padding-bottom: 0.55rem; padding-left: 1rem;
-        background: none; border: 0; cursor: pointer; font-family: inherit;
-    }
-    .side-nav li.side-contact { margin-top: 0.5rem; }
-    .side-contact .side-num, .side-contact .side-label { color: var(--accent); }
-    .side-contact .side-line { width: 0.9rem; height: 0.9rem; background: none; border: 1px solid var(--accent); transform: rotate(45deg); margin: 0 0.8rem; }
-    .side-contact .side-line::after { display: none; }
-    .side-nav button:hover .side-label { color: var(--text); }
-    .side-nav button:hover .side-line { background: var(--accent); }
+    .side-nav a { padding-right: 1.5rem; }
     .side-nav a:hover .side-label, .side-nav a:hover .side-num { color: var(--text); }
     .side-nav a.is-active .side-num, .side-nav a.is-active .side-label { color: var(--accent); }
     .side-nav a:hover .side-line { background: #666; }
@@ -454,15 +443,10 @@ main > .section:last-child { padding-bottom: 6rem; }
     background: rgba(13, 13, 13, 0.9);
     display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
 }
-.site-footer { padding-top: 3rem; padding-bottom: 2rem; gap: 1.25rem; }
-.footer-cta {
-    font-family: var(--font-serif); font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 600; line-height: 1.2;
-    color: var(--text);
-}
-.footer-actions { display: flex; align-items: stretch; gap: 0.75rem; margin-bottom: 0.75rem; }
+.footer-actions { display: flex; gap: 0.75rem; }
 .footer-social {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 48px; min-height: 40px;
+    width: 40px; height: 40px;
     border: 1px solid var(--line-strong); color: var(--text-muted);
     transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
 }

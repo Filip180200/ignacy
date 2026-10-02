@@ -245,7 +245,7 @@
     // Okno kontaktu
     // ==========================================
 
-    var dialog = document.getElementById('kontakt');
+    var dialog = document.getElementById('kontakt-okno');
     var mailLink = dialog.querySelector('.contact-mail');
     var email = mailLink.getAttribute('href').replace(/^mailto:/, '');
     // adres wpisuje się tylko w linku .contact-mail, przycisk „Napisz e-mail” bierze go stąd

@@ -32,7 +32,7 @@
             <li><a href="#filozofia">02 · Filozofia</a></li>
             <li><a href="#problemy">03 · W czym pomagam</a></li>
             <li><a href="#wspolpraca">04 · Współpraca</a></li>
-            <li><button type="button" data-contact-open>05 · Kontakt</button></li>
+            <li><a href="#kontakt">05 · Kontakt</a></li>
         </ul>
     </nav>
 
@@ -43,7 +43,7 @@
             <li><a href="#filozofia"><span class="side-label">Filozofia</span><span class="side-num">02</span><span class="side-line" aria-hidden="true"></span></a></li>
             <li><a href="#problemy"><span class="side-label">W czym pomagam</span><span class="side-num">03</span><span class="side-line" aria-hidden="true"></span></a></li>
             <li><a href="#wspolpraca"><span class="side-label">Współpraca</span><span class="side-num">04</span><span class="side-line" aria-hidden="true"></span></a></li>
-            <li class="side-contact"><button type="button" data-contact-open><span class="side-label">Kontakt</span><span class="side-num">05</span><span class="side-line" aria-hidden="true"></span></button></li>
+            <li><a href="#kontakt"><span class="side-label">Kontakt</span><span class="side-num">05</span><span class="side-line" aria-hidden="true"></span></a></li>
         </ul>
     </nav>
 
@@ -206,10 +206,21 @@
             </ol>
         </section>
 
+        <!-- ===== 5. KONTAKT ===== -->
+        <section class="section" id="kontakt" aria-labelledby="kontakt-title">
+            <header class="section-header reveal">
+                <p class="section-number" aria-hidden="true">05</p>
+                <h2 id="kontakt-title">Chcesz porozmawiać o współpracy?</h2>
+                <p class="section-intro">Napisz w kilku zdaniach, jaki sport uprawiasz i z czym chcesz pracować. Współpracuję z zawodnikami, drużynami i klubami.</p>
+            </header>
+            <div class="reveal">
+                <button class="btn btn-primary" type="button" data-contact-open>Kontakt</button>
+            </div>
+        </section>
     </main>
 
     <!-- ===== KONTAKT: okno otwierane przyciskami „Kontakt” / „Umów konsultację” ===== -->
-    <dialog class="contact-dialog" id="kontakt" aria-labelledby="kontakt-title">
+    <dialog class="contact-dialog" id="kontakt-okno" aria-labelledby="kontakt-okno-title">
         <div class="contact-dialog-inner">
             <div class="hero-beam" aria-hidden="true"></div>
             <button class="dialog-close" type="button" data-contact-close>
@@ -217,8 +228,8 @@
                 <span aria-hidden="true"></span>
             </button>
             <p class="eyebrow">Kontakt</p>
-            <h2 id="kontakt-title">Porozmawiajmy</h2>
-            <p>Napisz w kilku zdaniach, jaki sport uprawiasz i z czym chcesz pracować. Współpracuję z zawodnikami, drużynami i klubami.</p>
+            <h2 id="kontakt-okno-title">Porozmawiajmy</h2>
+            <p>Najlepiej napisz e-mail. Odpowiem i ustalimy termin pierwszej rozmowy.</p>
             <!-- ADRES E-MAIL: zmień w dwóch miejscach w linijce poniżej (po "mailto:" i w tekście linku) -->
             <a class="contact-mail" href="mailto:kontakt@przyklad.pl">kontakt@przyklad.pl</a>
             <div class="dialog-actions">
@@ -229,9 +240,7 @@
     </dialog>
 
     <footer class="site-footer">
-        <p class="footer-cta">Chcesz porozmawiać o współpracy?</p>
         <div class="footer-actions">
-            <button class="btn btn-primary" type="button" data-contact-open>Kontakt</button>
             <!-- LINKEDIN: adres profilu (ikona w stopce) -->
             <a class="footer-social" href="https://www.linkedin.com/in/ignacy-miko%C5%82ajczak-7b3b94244/" target="_blank" rel="noopener" aria-label="Profil na LinkedIn (otwiera się w nowej karcie)">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
