@@ -161,3 +161,8 @@ miejscach komunikat. Trzeba uruchomić prosty serwer:
 - Podmień zdjęcia i adres e-mail.
 - W `index.html` usuń linijkę `<meta name="robots" content="noindex">`. Dopóki tam jest, Google nie
   pokazuje strony w wynikach wyszukiwania.
+
+## Opinie klientów
+
+Opinie wpisujesz w `data/testimonials.json` (na razie pusta lista `[]`, strona pokazuje wtedy komunikat). Wpis: `{ "quote": "Treść opinii", "author": "Imię", "role": "np. zawodnik, 17 lat" }`. Kolejne wpisy oddzielaj przecinkami. Wpisuj tylko prawdziwe opinie, za zgodą autorów.
+

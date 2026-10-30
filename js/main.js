@@ -52,6 +52,17 @@
             return li;
         },
 
+        // data/testimonials.json → opinie klientów
+        testimonial: function (item) {
+            var box = el('figure', 'testimonial');
+            if (item.quote) box.appendChild(el('blockquote', null, item.quote));
+            var cap = el('figcaption');
+            if (item.author) cap.appendChild(el('p', 'testimonial-author', item.author));
+            if (item.role) cap.appendChild(el('p', 'testimonial-role', item.role));
+            box.appendChild(cap);
+            return box;
+        },
+
         // data/experience.json → karty ze zdjęciem
         experience: function (item) {
             var card = el('article', 'exp-card');
@@ -98,6 +109,10 @@
                 container.textContent = '';
                 // Pusty plik ([]) → cała podsekcja (z nagłówkiem) się chowa.
                 var subsection = container.closest('.subsection');
+                if (items.length === 0 && container.hasAttribute('data-empty')) {
+                    container.appendChild(el('p', 'data-status', container.getAttribute('data-empty')));
+                    return;
+                }
                 if (items.length === 0 && subsection) {
                     subsection.hidden = true;
                     return;
@@ -173,22 +188,32 @@
     document.querySelectorAll('[data-source]').forEach(loadList);
 
     // ==========================================
-    // 3. Menu mobilne
+    // 3. Menu u góry (hamburger + podmenu na małych ekranach)
     // ==========================================
 
     var toggle = document.querySelector('.nav-toggle');
-    var navList = document.getElementById('nav-list');
+    var mainNav = document.getElementById('main-nav');
 
     function closeMenu() {
-        navList.classList.remove('is-open');
+        mainNav.classList.remove('is-open');
         toggle.setAttribute('aria-expanded', 'false');
+        mainNav.querySelectorAll('.submenu.is-open').forEach(function (sub) { sub.classList.remove('is-open'); });
+        mainNav.querySelectorAll('.sub-toggle').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
     }
 
     toggle.addEventListener('click', function () {
-        var open = navList.classList.toggle('is-open');
+        var open = mainNav.classList.toggle('is-open');
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
-    navList.querySelectorAll('a').forEach(function (link) {
+    // strzałka przy pozycji z podmenu rozwija je (widoczna tylko na małych ekranach)
+    mainNav.querySelectorAll('.sub-toggle').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var sub = btn.parentNode.querySelector('.submenu');
+            var open = sub.classList.toggle('is-open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+    });
+    mainNav.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', closeMenu);
     });
     document.addEventListener('keydown', function (e) {
@@ -196,44 +221,19 @@
     });
     // klik poza menu zamyka je
     document.addEventListener('click', function (e) {
-        if (!e.target.closest('.mobile-nav')) closeMenu();
+        if (!e.target.closest('.site-header')) closeMenu();
     });
 
     // ==========================================
-    // 4. Aktywny link w menu, pasek postępu, cień nagłówka
+    // 4. Aktywna pozycja w menu
     // ==========================================
 
-    // Menu boczne jak spis rozdziałów: każda kreska wypełnia się w miarę czytania swojej sekcji.
-    var chapters = Array.prototype.map.call(document.querySelectorAll('.side-nav a'), function (link) {
-        return { line: link.querySelector('.side-line'), section: document.querySelector(link.getAttribute('href')) };
-    }).filter(function (c) { return c.line && c.section; });
-
-    var scrollTicking = false;
-    function onScroll() {
-        if (scrollTicking) return;
-        scrollTicking = true;
-        window.requestAnimationFrame(function () {
-            var max = document.documentElement.scrollHeight - window.innerHeight;
-
-            var readLine = window.innerHeight * 0.6;
-            var atBottom = max > 0 && window.scrollY >= max - 2;
-            chapters.forEach(function (c) {
-                var r = c.section.getBoundingClientRect();
-                var p = atBottom ? 1 : Math.min(1, Math.max(0, (readLine - r.top) / r.height));
-                c.line.style.setProperty('--p', p.toFixed(3));
-            });
-            scrollTicking = false;
-        });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
     if ('IntersectionObserver' in window) {
-        var navLinks = document.querySelectorAll('.nav-list a, .side-nav a');
+        var topLinks = document.querySelectorAll('.menu > li > a');
         var sectionObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (!entry.isIntersecting) return;
-                navLinks.forEach(function (link) {
+                topLinks.forEach(function (link) {
                     link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
                 });
             });

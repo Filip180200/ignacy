@@ -20,32 +20,50 @@
 
     <a class="skip-link" href="#o-mnie">Przejdź do treści</a>
 
-    <!-- Menu na telefonie / mniejszych ekranach: pływający przycisk w prawym górnym rogu -->
-    <nav class="mobile-nav" aria-label="Nawigacja">
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">
-            <span class="visually-hidden">Menu</span>
-            <span class="nav-toggle-line" aria-hidden="true"></span>
-            <span class="nav-toggle-line" aria-hidden="true"></span>
-        </button>
-        <ul class="nav-list" id="nav-list">
-            <li><a href="#o-mnie">01 · O mnie</a></li>
-            <li><a href="#filozofia">02 · Filozofia</a></li>
-            <li><a href="#problemy">03 · W czym pomagam</a></li>
-            <li><a href="#wspolpraca">04 · Współpraca</a></li>
-            <li><a href="#kontakt">05 · Kontakt</a></li>
-        </ul>
-    </nav>
-
-    <!-- Pionowe menu przy prawej krawędzi (duże ekrany): kreska = rozdział -->
-    <nav class="side-nav" aria-label="Rozdziały strony">
-        <ul>
-            <li><a href="#o-mnie"><span class="side-label">O mnie</span><span class="side-num">01</span><span class="side-line" aria-hidden="true"></span></a></li>
-            <li><a href="#filozofia"><span class="side-label">Filozofia</span><span class="side-num">02</span><span class="side-line" aria-hidden="true"></span></a></li>
-            <li><a href="#problemy"><span class="side-label">W czym pomagam</span><span class="side-num">03</span><span class="side-line" aria-hidden="true"></span></a></li>
-            <li><a href="#wspolpraca"><span class="side-label">Współpraca</span><span class="side-num">04</span><span class="side-line" aria-hidden="true"></span></a></li>
-            <li class="side-contact"><a href="#kontakt"><span class="side-label">Kontakt</span><span class="side-num">05</span><span class="side-line" aria-hidden="true"></span></a></li>
-        </ul>
-    </nav>
+    <!-- Pasek menu u góry. Na dużych ekranach podmenu rozwijają się po najechaniu, na małych przez hamburger. -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="#start">Ignacy Mikołajczak</a>
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+                <span class="visually-hidden">Menu</span>
+                <span class="nav-toggle-line" aria-hidden="true"></span>
+                <span class="nav-toggle-line" aria-hidden="true"></span>
+            </button>
+            <nav class="main-nav" id="main-nav" aria-label="Menu główne">
+                <ul class="menu">
+                    <li class="has-sub">
+                        <a href="#o-mnie">O mnie</a>
+                        <button class="sub-toggle" type="button" aria-expanded="false" aria-label="Rozwiń: O mnie"></button>
+                        <ul class="submenu">
+                            <li><a href="#dlaczego">Dlaczego psychologia sportu</a></li>
+                            <li><a href="#doswiadczenie">Doświadczenie</a></li>
+                            <li><a href="#wyksztalcenie">Wykształcenie</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="#pomoc">W czym mogę Ci pomóc</a>
+                        <button class="sub-toggle" type="button" aria-expanded="false" aria-label="Rozwiń: W czym mogę Ci pomóc"></button>
+                        <ul class="submenu">
+                            <li><a href="#zawodnik">Zawodnik / zawodniczka</a></li>
+                            <li><a href="#rodzic">Rodzic</a></li>
+                            <li><a href="#trener">Trener / trenerka</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#wspolpraca">Jak wygląda współpraca z psychologiem sportu</a></li>
+                    <li class="has-sub">
+                        <a href="#oferta">Oferta</a>
+                        <button class="sub-toggle" type="button" aria-expanded="false" aria-label="Rozwiń: Oferta"></button>
+                        <ul class="submenu">
+                            <li><a href="#oferta-indywidualna">Klienci indywidualni</a></li>
+                            <li><a href="#oferta-druzyny">Drużyny sportowe</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#opinie">Opinie klientów</a></li>
+                    <li class="menu-cta"><a href="#spotkanie">Umów się na spotkanie</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
     <main>
         <!-- ===== START ===== -->
@@ -63,7 +81,7 @@
                     </h1>
                     <p class="lead hero-anim" style="--d: 5">Piłka nożna jest ze mną od mundialu w 2006 roku i przez wiele lat sam grałem. Dziś jako psycholog sportu wspieram zawodników, drużyny, trenerów i rodziców, bo sport to coś więcej niż wynik.</p>
                     <div class="hero-actions hero-anim" style="--d: 6">
-                        <button class="btn btn-primary" type="button" data-contact-open>Umów konsultację</button>
+                        <a class="btn btn-primary" href="#spotkanie">Umów się na spotkanie</a>
                         <a class="btn" href="#o-mnie">Poznaj mnie</a>
                     </div>
                 </div>
@@ -86,101 +104,144 @@
                 <p class="section-intro">Wierzę, że sport powinien dawać więcej niż lepsze wyniki. Powinien pomagać ludziom rozwijać się i wyposażać ich w umiejętności, które przydają się daleko poza boiskiem. Pracuję z drużynami młodzieżowymi i juniorskimi w piłce nożnej i piłce ręcznej.</p>
             </header>
 
-            <div class="subsection reveal">
-                <h3 class="subsection-title">Kariera sportowa</h3>
+            <div class="subsection reveal" id="dlaczego">
+                <h3 class="subsection-title">Dlaczego psychologia sportu</h3>
+                <p class="subsection-lead">Przez wiele lat sam grałem w piłkę. Wiem, jak wygląda stres przed meczem, błąd, który ciągnie się przez całą połowę, i powrót po kontuzji. Dlatego zostałem psychologiem sportu.</p>
                 <ol class="timeline" id="career-list" data-source="data/career.json" data-render="career">
                     <li class="data-status">Wczytywanie…</li>
                 </ol>
+                <h4 class="subsection-minor">Moja filozofia pracy</h4>
+                <ol class="philosophy">
+                    <li>
+                        <h3>Więcej niż gra</h3>
+                        <p>Sport ma pomagać rosnąć jako człowiek, nie tylko jako zawodnik. Przywództwo, odporność, dyscyplina i odpowiedzialność, wyćwiczone na boisku, procentują później w szkole, pracy i życiu.</p>
+                    </li>
+                    <li>
+                        <h3>Metody sprawdzone w badaniach</h3>
+                        <p>Pracuję narzędziami, których skuteczność potwierdzono w badaniach z psychologii sportu: treningiem uwagi, regulacją pobudzenia, wyznaczaniem celów i rutynami przedstartowymi.</p>
+                    </li>
+                    <li>
+                        <h3>Umiejętności, które się trenuje</h3>
+                        <p>Pewność siebie i koncentracja to nie cechy, z którymi się rodzimy. Można je ćwiczyć tak samo systematycznie jak szybkość czy technikę.</p>
+                    </li>
+                    <li>
+                        <h3>Współpraca z trenerem i sztabem</h3>
+                        <p>Jeśli zawodnik się na to zgadza, ustalam wspólny kierunek z trenerem, fizjoterapeutą i rodzicami. Przy tym zawsze szanuję poufność rozmów.</p>
+                    </li>
+                    <li>
+                        <h3>Samodzielność zamiast zależności</h3>
+                        <p>Moim celem jest, by zawodnik z czasem coraz rzadziej potrzebował mojego wsparcia i w kluczowym momencie meczu umiał sam sięgnąć po właściwe narzędzia.</p>
+                    </li>
+                </ol>
             </div>
 
-            <div class="subsection reveal">
-                <h3 class="subsection-title">Edukacja</h3>
-                <ul class="edu-list" id="education-list" data-source="data/education.json" data-render="education">
-                    <li class="data-status">Wczytywanie…</li>
-                </ul>
-            </div>
-
-            <div class="subsection reveal">
-                <h3 class="subsection-title">Doświadczenie zawodowe</h3>
+            <div class="subsection reveal" id="doswiadczenie">
+                <h3 class="subsection-title">Doświadczenie</h3>
                 <div class="experience-grid" id="experience-list" data-source="data/experience.json" data-render="experience">
                     <p class="data-status">Wczytywanie…</p>
                 </div>
             </div>
 
+            <div class="subsection reveal" id="wyksztalcenie">
+                <h3 class="subsection-title">Wykształcenie</h3>
+                <ul class="edu-list" id="education-list" data-source="data/education.json" data-render="education">
+                    <li class="data-status">Wczytywanie…</li>
+                </ul>
+            </div>
+
             <noscript>
-                <p class="data-status data-error">Kariera, edukacja i doświadczenie wyświetlają się po włączeniu JavaScriptu w przeglądarce.</p>
+                <p class="data-status data-error">Kariera, doświadczenie, wykształcenie i opinie wyświetlają się po włączeniu JavaScriptu w przeglądarce.</p>
             </noscript>
         </section>
 
-        <!-- ===== 2. FILOZOFIA ===== -->
-        <section class="section" id="filozofia" aria-labelledby="filozofia-title">
+        <!-- ===== 2. W CZYM MOGĘ CI POMÓC ===== -->
+        <section class="section" id="pomoc" aria-labelledby="pomoc-title">
             <header class="section-header reveal">
                 <p class="section-number" aria-hidden="true">02</p>
-                <h2 id="filozofia-title">Moja filozofia</h2>
+                <h2 id="pomoc-title">W czym mogę Ci pomóc</h2>
+                <p class="section-intro">Sport wygląda inaczej z perspektywy zawodnika, rodzica i trenera. Wybierz, kim jesteś, a zobaczysz, z czym najczęściej pracujemy.</p>
             </header>
-            <ol class="philosophy">
-                <li class="reveal">
-                    <h3>Więcej niż gra</h3>
-                    <p>Sport ma pomagać rosnąć jako człowiek, nie tylko jako zawodnik. Przywództwo, odporność, dyscyplina i odpowiedzialność, wyćwiczone na boisku, procentują później w szkole, pracy i życiu.</p>
-                </li>
-                <li class="reveal">
-                    <h3>Metody sprawdzone w badaniach</h3>
-                    <p>Pracuję narzędziami, których skuteczność potwierdzono w badaniach z psychologii sportu: treningiem uwagi, regulacją pobudzenia, wyznaczaniem celów i rutynami przedstartowymi.</p>
-                </li>
-                <li class="reveal">
-                    <h3>Umiejętności, które się trenuje</h3>
-                    <p>Pewność siebie i koncentracja to nie cechy, z którymi się rodzimy. Można je ćwiczyć tak samo systematycznie jak szybkość czy technikę.</p>
-                </li>
-                <li class="reveal">
-                    <h3>Współpraca z trenerem i sztabem</h3>
-                    <p>Jeśli zawodnik się na to zgadza, ustalam wspólny kierunek z trenerem, fizjoterapeutą i rodzicami. Przy tym zawsze szanuję poufność rozmów.</p>
-                </li>
-                <li class="reveal">
-                    <h3>Samodzielność zamiast zależności</h3>
-                    <p>Moim celem jest, by zawodnik z czasem coraz rzadziej potrzebował mojego wsparcia i w kluczowym momencie meczu umiał sam sięgnąć po właściwe narzędzia.</p>
-                </li>
-            </ol>
+
+            <div class="subsection" id="zawodnik">
+                <h3 class="subsection-title reveal">Zawodnik / zawodniczka</h3>
+                <ul class="problem-grid">
+                    <li class="problem-card reveal">
+                        <h4>Stres startowy</h4>
+                        <p>Ścisk w żołądku przed meczem, nieprzespana noc przed zawodami, „sparaliżowane” nogi w pierwszych minutach. Uczymy się regulować pobudzenie tak, by pracowało na Twoją korzyść.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Koncentracja</h4>
+                        <p>Rozproszenie po błędzie, myślenie o wyniku zamiast o kolejnej akcji. Ćwiczymy powrót uwagi do „tu i teraz” w ciągu kilku sekund.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Powrót po kontuzji</h4>
+                        <p>Lęk przed ponownym urazem i utrata zaufania do własnego ciała. Wspieram zawodnika na każdym etapie rehabilitacji, w kontakcie z fizjoterapeutą.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Motywacja</h4>
+                        <p>Spadek zaangażowania, trening „na autopilocie”, brak jasnego celu. Wspólnie szukamy tego, co naprawdę napędza Cię do pracy.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Wypalenie</h4>
+                        <p>Chroniczne zmęczenie, cynizm wobec sportu i poczucie, że wysiłek nie ma sensu. Pomagam odbudować równowagę między obciążeniem a regeneracją.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Presja wyniku</h4>
+                        <p>Oczekiwania trenera, rodziców, kibiców i własne. Uczymy się oddzielać wartość człowieka od rezultatu meczu i grać odważniej.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="subsection" id="rodzic">
+                <h3 class="subsection-title reveal">Rodzic</h3>
+                <ul class="problem-grid">
+                    <li class="problem-card reveal">
+                        <h4>Jak wspierać, a nie naciskać</h4>
+                        <p>Co mówić dziecku przed meczem i po nim, żeby dodać mu pewności, a nie dołożyć presji. Wspólnie szukamy Twojej roli na trybunach.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Porażki i błędy dziecka</h4>
+                        <p>Jak rozmawiać po przegranym meczu i jak pomóc dziecku wyciągać wnioski zamiast się obwiniać.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Sport i szkoła</h4>
+                        <p>Jak pogodzić treningi, naukę i odpoczynek, żeby młody zawodnik nie spłonął przedwcześnie.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Kiedy szukać pomocy</h4>
+                        <p>Jakie sygnały (spadek chęci, lęk przed meczami, wycofanie) warto potraktować poważnie i jak wygląda pierwsza rozmowa.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="subsection" id="trener">
+                <h3 class="subsection-title reveal">Trener / trenerka</h3>
+                <ul class="problem-grid">
+                    <li class="problem-card reveal">
+                        <h4>Komunikacja z zawodnikami</h4>
+                        <p>Jak przekazywać krytykę i pochwałę, żeby zawodnik słyszał informację, a nie atak. Praca nad stylem rozmów w szatni i na treningu.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Atmosfera w zespole</h4>
+                        <p>Konflikty, podziały, rywalizacja o miejsce w składzie. Pomagam budować zaufanie i wspólne cele.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Motywowanie młodzieży</h4>
+                        <p>Jak utrzymać zaangażowanie zawodników w różnym wieku i na różnym poziomie, bez straszenia i bez obniżania wymagań.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Własny stres trenera</h4>
+                        <p>Presja wyniku dotyczy też Ciebie. Pracujemy nad regulacją emocji w trakcie meczu i nad równowagą między pracą a regeneracją.</p>
+                    </li>
+                </ul>
+            </div>
         </section>
 
-        <!-- ===== 3. PROBLEMY ===== -->
-        <section class="section" id="problemy" aria-labelledby="problemy-title">
-            <header class="section-header reveal">
-                <p class="section-number" aria-hidden="true">03</p>
-                <h2 id="problemy-title">Jakie problemy pomagam rozwiązać</h2>
-            </header>
-            <ul class="problem-grid">
-                <li class="problem-card reveal">
-                    <h3>Stres startowy</h3>
-                    <p>Ścisk w żołądku przed meczem, nieprzespana noc przed zawodami, „sparaliżowane” nogi w pierwszych minutach. Uczymy się regulować pobudzenie tak, by pracowało na Twoją korzyść.</p>
-                </li>
-                <li class="problem-card reveal">
-                    <h3>Koncentracja</h3>
-                    <p>Rozproszenie po błędzie, myślenie o wyniku zamiast o kolejnej akcji. Ćwiczymy powrót uwagi do „tu i teraz” w ciągu kilku sekund.</p>
-                </li>
-                <li class="problem-card reveal">
-                    <h3>Powrót po kontuzji</h3>
-                    <p>Lęk przed ponownym urazem i utrata zaufania do własnego ciała. Wspieram zawodnika na każdym etapie rehabilitacji, w kontakcie z fizjoterapeutą.</p>
-                </li>
-                <li class="problem-card reveal">
-                    <h3>Motywacja</h3>
-                    <p>Spadek zaangażowania, trening „na autopilocie”, brak jasnego celu. Wspólnie szukamy tego, co naprawdę napędza Cię do pracy.</p>
-                </li>
-                <li class="problem-card reveal">
-                    <h3>Wypalenie</h3>
-                    <p>Chroniczne zmęczenie, cynizm wobec sportu i poczucie, że wysiłek nie ma sensu. Pomagam odbudować równowagę między obciążeniem a regeneracją.</p>
-                </li>
-                <li class="problem-card reveal">
-                    <h3>Presja wyniku</h3>
-                    <p>Oczekiwania trenera, rodziców, kibiców i własne. Uczymy się oddzielać wartość człowieka od rezultatu meczu i grać odważniej.</p>
-                </li>
-            </ul>
-        </section>
-
-        <!-- ===== 4. WSPÓŁPRACA ===== -->
+        <!-- ===== 3. WSPÓŁPRACA ===== -->
         <section class="section" id="wspolpraca" aria-labelledby="wspolpraca-title">
             <header class="section-header reveal">
-                <p class="section-number" aria-hidden="true">04</p>
-                <h2 id="wspolpraca-title">Jak wygląda współpraca</h2>
+                <p class="section-number" aria-hidden="true">03</p>
+                <h2 id="wspolpraca-title">Jak wygląda współpraca z psychologiem sportu</h2>
             </header>
             <ol class="steps">
                 <li class="step reveal">
@@ -206,19 +267,75 @@
             </ol>
         </section>
 
-        <!-- ===== 5. KONTAKT ===== -->
-        <section class="section" id="kontakt" aria-labelledby="kontakt-title">
+        <!-- ===== 4. OFERTA ===== -->
+        <section class="section" id="oferta" aria-labelledby="oferta-title">
+            <header class="section-header reveal">
+                <p class="section-number" aria-hidden="true">04</p>
+                <h2 id="oferta-title">Oferta</h2>
+                <p class="section-intro">Formę współpracy i ceny ustalamy na pierwszej rozmowie, bo zależą od Twoich potrzeb.</p>
+            </header>
+
+            <div class="subsection" id="oferta-indywidualna">
+                <h3 class="subsection-title reveal">Klienci indywidualni</h3>
+                <ul class="problem-grid">
+                    <li class="problem-card reveal">
+                        <h4>Konsultacja jednorazowa</h4>
+                        <p>Jedno spotkanie, na którym omawiamy konkretny problem (np. stres przed ważnym turniejem) i ustalamy, co możesz zrobić od razu.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Praca cykliczna</h4>
+                        <p>Regularne sesje z celami i ćwiczeniami między spotkaniami. Dla zawodników, którzy chcą systematycznie pracować nad swoją głową.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Przygotowanie do zawodów</h4>
+                        <p>Plan psychologiczny na turniej lub sezon: rutyny przedstartowe, plan na trudne momenty meczu, wyznaczanie celów.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="subsection" id="oferta-druzyny">
+                <h3 class="subsection-title reveal">Drużyny sportowe</h3>
+                <ul class="problem-grid">
+                    <li class="problem-card reveal">
+                        <h4>Warsztaty dla drużyny</h4>
+                        <p>Jednorazowe lub cykliczne spotkania z całym zespołem: koncentracja, komunikacja, radzenie sobie z presją.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Stała współpraca z klubem</h4>
+                        <p>Praca z zespołem przez cały sezon, w tym rozmowy indywidualne z zawodnikami, jeśli się na to zgadzają.</p>
+                    </li>
+                    <li class="problem-card reveal">
+                        <h4>Wsparcie sztabu i rodziców</h4>
+                        <p>Spotkania z trenerami i rodzicami zawodników: wspólne zasady, komunikacja i rozwiązywanie trudnych sytuacji.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===== 5. OPINIE KLIENTÓW ===== -->
+        <section class="section" id="opinie" aria-labelledby="opinie-title">
+            <header class="section-header reveal">
+                <p class="section-number" aria-hidden="true">05</p>
+                <h2 id="opinie-title">Opinie klientów</h2>
+            </header>
+            <div class="testimonial-grid" id="testimonials-list" data-source="data/testimonials.json" data-render="testimonial" data-empty="Opinie pojawią się tutaj wkrótce.">
+                <p class="data-status">Wczytywanie…</p>
+            </div>
+        </section>
+
+        <!-- ===== 6. UMÓW SIĘ NA SPOTKANIE ===== -->
+        <section class="section" id="spotkanie" aria-labelledby="spotkanie-title">
             <div class="panel contact-panel reveal">
                 <div class="hero-beam" aria-hidden="true"></div>
-                <p class="section-number" aria-hidden="true">05</p>
-                <h2 id="kontakt-title">Chcesz porozmawiać o współpracy?</h2>
-                <p class="section-intro">Napisz w kilku zdaniach, jaki sport uprawiasz i z czym chcesz pracować. Współpracuję z zawodnikami, drużynami i klubami.</p>
-                <button class="btn btn-primary" type="button" data-contact-open>Kontakt</button>
+                <p class="section-number" aria-hidden="true">06</p>
+                <h2 id="spotkanie-title">Umów się na spotkanie</h2>
+                <p class="section-intro">Pierwsza rozmowa pozwala sprawdzić, czy mogę Ci pomóc. Napisz, w jakim sporcie jesteś i z czym chcesz pracować, a umówimy termin (stacjonarnie we Wrocławiu lub online).</p>
+                <button class="btn btn-primary" type="button" data-contact-open>Umów się na spotkanie</button>
             </div>
         </section>
     </main>
 
-    <!-- ===== KONTAKT: okno otwierane przyciskami „Kontakt” / „Umów konsultację” ===== -->
+    <!-- ===== KONTAKT: okno otwierane przyciskami kontaktu ===== -->
     <dialog class="contact-dialog" id="kontakt-okno" aria-labelledby="kontakt-okno-title">
         <div class="contact-dialog-inner">
             <div class="hero-beam" aria-hidden="true"></div>
